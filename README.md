@@ -8,14 +8,12 @@ The images are volume-only `scratch` images, and have no OS.
 
 A few docker images have been published to [Bitshock](https://hub.docker.com/u/bitshock) docker hub:
 
-* x86_64-linux-musl, linux/arm64 platform only
-* aarch64-linux-musl, linux/amd64 platform only
-
-When compiling with a target that matches the platform, use your distro's musl packages, not one of these images.
+* `bitshock/x86_64-linux-musl-ubuntu-24.04` for `linux/amd64` / `linux/arm64` 
+* `bitshock/aarch64-linux-musl-ubuntu-24.04` for `linux/amd64` / `linux/arm64`
 
 ### Target x86_64 for Ubuntu
 
-To target x86_64-linux-musl when compiling on linux/arm64:
+To target x86_64-linux-musl:
 
 ``` dockerfile
 FROM bitshock/x86_64-linux-musl-ubuntu-24.04:latest AS musl
@@ -30,7 +28,7 @@ RUN export PATH=/opt/x86_64-linux-musl/bin:$PATH
 
 ### Target aarch64 for Ubuntu
 
-To target aarch64-linux-musl when compiling on linux/amd64:
+To target aarch64-linux-musl:
 
 ``` dockerfile
 FROM bitshock/aarch64-linux-musl-ubuntu-24.04:latest AS musl
@@ -47,10 +45,10 @@ RUN export PATH=/opt/aarch64-linux-musl/bin:$PATH
 
 Set the `TARGET` build arg to target the musl target. See  [musl-cross-make](https://github.com/richfelker/musl-cross-make/) for a list of available targets.
 
-Use `--platform` to set the compiler host architecture. You most likely won't need an architecture that matches  `TARGET`, as your distro most likely already supplies it.
+Use `--platform` to set the compiler host architecture. 
 
 Example:
 
 ``` shell
-docker buildx build --platform linux/arm64 --build-arg TARGET=x86_64-linux-musl --load -t x86_64-linux-musl . 
+docker buildx build --platform linux/amd64,linux/arm64 --build-arg TARGET=x86_64-linux-musl --load -t x86_64-linux-musl -f ubuntu.Dockerfile . 
 ```
