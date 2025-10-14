@@ -2,7 +2,7 @@ name: x86_64-linux-musl-ubuntu-24.04
 
 on:
   push:
-    tags: [ 'v*' ]
+    tags: [ 'v*.*.*' ]
 
 env:
   IMAGE_NAME: bitshock/x86_64-linux-musl-ubuntu-24.04
