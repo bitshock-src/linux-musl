@@ -18,11 +18,11 @@ When compiling with a target that matches the platform, use your distro's musl p
 To target x86_64-linux-musl when compiling on linux/arm64:
 
 ``` dockerfile
-FROM bitshock/x86_64-linux-musl-ubuntu-24.04:latest AS x86_64-musl
+FROM bitshock/x86_64-linux-musl-ubuntu-24.04:latest AS musl
 
 FROM ubuntu:24.04 AS builder
 
-COPY --from=x86_64-musl /musl/x86_64-linux-musl /opt/x86_64-linux-musl
+COPY --from=musl /musl /opt/x86_64-linux-musl
 
 RUN export PATH=/opt/x86_64-linux-musl/bin:$PATH
 
@@ -33,11 +33,11 @@ RUN export PATH=/opt/x86_64-linux-musl/bin:$PATH
 To target aarch64-linux-musl when compiling on linux/amd64:
 
 ``` dockerfile
-FROM bitshock/aarch64-linux-musl-ubuntu-24.04:latest AS aarch64-musl
+FROM bitshock/aarch64-linux-musl-ubuntu-24.04:latest AS musl
 
 FROM ubuntu:24.04 AS builder
 
-COPY --from=aarch64-musl /musl/aarch64-linux-musl /opt/aarch64-linux-musl
+COPY --from=musl /musl /opt/aarch64-linux-musl
 
 RUN export PATH=/opt/aarch64-linux-musl/bin:$PATH
 
